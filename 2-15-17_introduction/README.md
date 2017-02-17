@@ -61,7 +61,7 @@ Categories include:
 * Crypto: exploit a vulnerability in a flawed cryptographic service
 * Web: exploit a vulnerability in a website
 * Forensics: read a packet dump to piece together what happened
-* Stegonography: recover secret information (the flag) hidden in an image or other file
+* Steganography: recover secret information (the flag) hidden in an image or other file
 * Recon: stalk one of the organizers of the CTF to find a flag
 
 
