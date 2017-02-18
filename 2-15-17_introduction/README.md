@@ -11,7 +11,7 @@ Action items (in decreasing order of importance):
 
 ## Crackmes
 
-If you've done all that, have a go at these three crackmes that we prepared for this meeting. For each one, you're looking for a "flag"—a specific string that signals that you've solved the challenge. All three flags are of the form `TechSec{.*}` where any series of ASCII characters can appear in between the braces. We'll go over the solutions to the three exercises at the end of this meeting.
+If you've done all that, have a go at [these three crackmes](https://github.com/TechSecCTF/meeting_notes/tree/master/2-15-17_introduction/crackmes) that we prepared for this meeting. For each one, you're looking for a "flag"—a specific string that signals that you've solved the challenge. All three flags are of the form `TechSec{.*}` where any series of ASCII characters can appear in between the braces. We'll go over the solutions to the three exercises at the end of this meeting.
 
 Having trouble getting started with these? Here are some tips:
 
@@ -61,7 +61,7 @@ Categories include:
 * Crypto: exploit a vulnerability in a flawed cryptographic service
 * Web: exploit a vulnerability in a website
 * Forensics: read a packet dump to piece together what happened
-* Stegonography: recover secret information (the flag) hidden in an image or other file
+* Steganography: recover secret information (the flag) hidden in an image or other file
 * Recon: stalk one of the organizers of the CTF to find a flag
 
 
