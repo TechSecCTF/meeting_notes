@@ -67,7 +67,7 @@ Categories include:
 
 Here's an example of what a Jeopardy style CTF might look like:
 
-![alt-text](https://www.dropbox.com/s/amzd4zaxa7gk87g/Screenshot%202017-02-12%2021.55.14.png?dl=1)
+![alt-text](https://www.dropbox.com/s/3wnt96wyf5utma7/jeopardy.png?dl=1)
 
 In Attack / Defense, each team is given a a set of identical services that they are required to maintain. Each of these services contains one or more vulnerabilities that teams will need to patch (defense). Teams can also exploit each others services to steal flags and gain points (attack). Teams are allowed to monitor the network traffic to their services, so if a team gets exploited, they are often able to figure out what the specific exploit was, and then apply it to all the other teams. This technique is known as *reflection*.
 
