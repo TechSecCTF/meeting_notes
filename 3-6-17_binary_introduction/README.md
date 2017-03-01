@@ -70,3 +70,10 @@ following instructions:
 * `ret` - begin executing instructions at the location at the top of the stack,
 then increment the stack pointer
 * `nop` - do absolutely nothing
+
+## TODO
+* Intel vs. Assembly source and destination switch
+* What is ELF
+* What is x86
+* Calling conventions
+* Registers
