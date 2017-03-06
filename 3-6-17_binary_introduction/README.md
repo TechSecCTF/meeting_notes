@@ -1,4 +1,4 @@
-# Binaries?
+# Binary Workshop
 The first step in learning to exploit programs is understanding how they work.
 This guide is going to cover ELF executables specifically, but the knowledge is
 generally applicable to other types of executables. We colloquially refer to
@@ -57,7 +57,7 @@ are called `al`. The second lowest 8 bits are called `ah`.
 ![Register Sizes](images/register_sizes.png)
 <img src="images/rax.png" width=500 align="center">
 
-# hello.c
+# `hello.c`
 First we'll write a simple program and look at it's machine code. Write the
 program below (or a similar one), compile it, and run it if you want:
 
@@ -109,7 +109,7 @@ yourself in a situation where you have to read assembly written in AT&T syntax,
 just remember that location of the source and destination arguments are
 swapped.
 
-## Some basic assembly
+## Some basic x86 assembly
 Assembly instructions in Intel syntax have the form `<instruction>
 <destination> <source>`, or just `<instruction> <argument>` if there is no
 destination and source. The disassembly of `main()` in `hello.c` contains the
@@ -205,8 +205,9 @@ to a `const char*` as it's only argument, which means that `0xf005c4` must be a
 pointer to a `const char*`. In fact, we can verify this by running `objdump -s
 hello | less` and searching for `4005c0`.
 
-# guess_the_number.c
+# `guess_the_number.c`
 We'll analyze this program next. Feel free to run it for fun.
+
 ```C
 #include <stdio.h>
 #include <stdlib.h>
@@ -259,6 +260,7 @@ int main(void) {
 ```
 This is the disassembly from `objdump`. Make sure you understand the
 annotations.
+
 ```
 00000000004007b3 <main>:
   # function prologue
@@ -317,15 +319,79 @@ register, and the `jmp` family of instructions.
 ## Arithmetic instructions
 Each of these instructions performs some operation on their arguments and
 overwrites the `dest` argument with the result.
+
 * `add dest src`  - writes `dest + src` to `dest`
 * `sub dest src`  - writes `dest - src` to `dest`
 * `imul dest src` - writes `dest * src` to `dest` (signed multiply)
-* `idiv arg`      - writes the quotient of `edx:eax / arg` to `eax`, and writes
-  the remainder to `edx` (signed divide)
+* `idiv arg`      - writes the quotient of `edx:eax / arg` to `eax`, and writes the remainder to `edx` (signed divide)
 * `and dest src`  - writes `dest & src` to `dest` (bitwise and)
 * `or dest src`   - writes `dest | src` to `dest` (bitwise or)
 * `xor dest src`  - writes `dest ^ src` to `dest` (bitwise xor)
 
-## TODO
-* What is ELF
-* What is x86
+## Jumps
+
+Jump instructions allow the programmer / compiler to introduce control flow. Normally the `eip` register increments to point to the next assembly instruction after executing the current instruction. Jumps set the `eip` register to point to a different address so that after executing the jump, the program will start executing instructions at that address.
+
+The simplest type of jump is an *unconditional jump*, which looks like `jmp loc`. This loads `eip` with the address specified in the first argument (`loc`). 
+
+The rest of the jump instructions are so-called *conditional* jumps, which only change `eip` if a certain condition is met. (If / else clauses will basically always produce conditional jumps). 
+
+To fully understand how conditional jumps work, you need to understand the `EFLAGS` register. `EFLAGS` is a 32-bit register which should be thought of as a collection of 32 "status" bits which are flipped on and off depending on the results of operations and the state of the processor. You can see the full set of bits and their uses [here](https://en.wikibooks.org/wiki/X86_Assembly/X86_Architecture#EFLAGS_Register), but there are only three that are important for our purposes:
+
+* ZF - Zero Flag: Set if the result of the last operation was 0
+* SF - Sign Flag: Set if the result of the last operation was negative
+* OF - Overflow Flag: Set if the result of the last operation overflowed
+
+So, if the processor executes `sub rax rbx` and `rax` and `rbx` were both set to 7, it would simultaneously write 0 to `rax` and also set the ZF flag to 1 since the result of the operation was 0. The SF and OF flags would both be set to 0.
+
+Finally, let's introduce a couple more instructions: `cmp` and `test`. 
+
+`cmp` works almost exactly like `sub`, except it doesn't actually write the result of the subtraction to the first argument: it only sets the status flags. Thus, `cmp` is basically only used right before a conditional jump.
+
+`test` works almost exactly like `and`, except, again, it doesn't actually write the result of the bitwise-and to the first argument: it only sets the status flags. `test` is also pretty much only used before conditional jumps.
+
+Each of the conditional jumps checks some combination of the above three status flags, and if the condition holds they jump to the specified address. Otherwise, the program continues to execute normally. The (commonly seen) conditional jumps are:
+
+* `je` - jump if equal (ZF = 1)
+* `jne` - jump if not equal (ZF = 0)
+* `jg` - jump if greater (SF = OF and ZF = 0)
+* `jge` -  jump if greater than or equal to (SF = OF or ZF = 1)
+* `jl` - jump if lesser (SF ^ OF = 1)
+* `jle` - jump if less than or equal to (SF ^ OF = 1 or ZF = 1)
+* `jz` - jump if zero (ZF = 1) (this is identical to `je`)
+* `jnz` - jump if not zero (ZF = 0) (this is identical to `jne`)
+
+It's a useful exercise to figure out why each jump decsription makes sense in light of which status flags it checks. For example, a very common usage pattern for `je` is:
+
+```
+cmp rax rbx
+je loc
+```
+
+Recall that `cmp` subtracts `rax` and `rbx` and sets the status flags based on the result of the subraction. If `rax` = `rbx`, then the result will be 0, so the ZF status flag will be set to 1. `je` jumps if and only if ZF = 1, so in this case it will only jump if and only if `rax` = `rbx` (which is why it's described as "jump if equal").
+
+See if you can figure out why the conditions for `jg` and `jge` involve SF = OF.
+
+Another common pattern you see in assembly all the time is:
+
+```
+test rax rax
+jnz loc
+```
+
+Recall that `test` performs the bitwise-and of its two arguments, and sets the status flags based on the result. Here it's ANDing the same register against itself, so what's the point? Well, it turns out this is the easiest way in assembly to get the "result" to be a specific register itself. The result will always be `rax` since `rax && rax` = `rax`. Thus, this code jumps if and only if `rax` is non-zero. 
+
+With this new knowledge you should be able to understand the purpose of every instruction in `main` of `guess_the_number`. Make sure you completely understand the control flow at work.
+
+# Challenges
+
+To further practice your newfound assembly skills, we've provided 3 binary "games" in the `challenges/` directory. The goal of each of these is to get the binary to print out `Congratulations! You win!` by interacting with it throughs standard input. In order to do so, you'll have to reverse engineer each of the binaries and figure out how it works.
+
+# Resources
+
+This was a lot of information. Feel free to go through this entire guide at your own pace, and email us with any questions. If you want an alternate take or extra information on these topics check out these links:
+
+* [x86 Assembly Guide](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html) - a beautiful and fairly comprehensive guide to x86.
+* [RE Cheat Sheet](http://r00ted.com/cheat%20sheet%20reverse%20v6.png) - a sometimes-useful cheatsheet for reverse engineering
+* [6.004 OCW](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-004-computation-structures-spring-2009/) - Lecture Videos for MIT's 6.004 class
+* [x86 Assembly Wikibook](https://en.wikibooks.org/wiki/X86_Assembly) - crowd-written book on x86 assembly
