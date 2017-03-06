@@ -178,7 +178,8 @@ and cleans it up by executing a function epilogue:
 
 After the function prologue has been executed, the callee references local
 variables with a negative offset from `rbp` and arguments seven and later with
-a positive offset from `rbp`.
+a positive offset from `rbp`. You can see this calling convention executed in
+machine code by compiling `args.c` and reading it's disassembly.
 
 # Reading assembly
 With this new information, we can now understand what `hello` is doing at the
@@ -225,11 +226,6 @@ int guess(int target) {
     while (1) {
         tries++;
         scanf("%d", &guess);
-
-        if (guess == 31337) {
-            printf("Well done.\n");
-            return -1;
-        }
 
         if (target < guess)
             printf("Too high.\n");
@@ -342,7 +338,7 @@ To fully understand how conditional jumps work, you need to understand the `EFLA
 * SF - Sign Flag: Set if the result of the last operation was negative
 * OF - Overflow Flag: Set if the result of the last operation overflowed
 
-So, if the processor executes `sub rax rbx` and `rax` and `rbx` were both set to 7, it would simultaneously write 0 to `rax` and also set the ZF flag to 1 since the result of the operation was 0. The SF and OF flags would both be set to 0.
+So, if the processor executes `sub rax rbx` while `rax` and `rbx` were both set to 7, it would simultaneously write 0 to `rax` and also set the ZF flag to 1 since the result of the operation was 0. The SF and OF flags would both be set to 0.
 
 Finally, let's introduce a couple more instructions: `cmp` and `test`. 
 
@@ -385,7 +381,7 @@ With this new knowledge you should be able to understand the purpose of every in
 
 # Challenges
 
-To further practice your newfound assembly skills, we've provided 3 binary "games" in the `challenges/` directory. The goal of each of these is to get the binary to print out `Congratulations! You win!` by interacting with it throughs standard input. In order to do so, you'll have to reverse engineer each of the binaries and figure out how it works.
+To further practice your newfound assembly skills, we've provided 3 binary "games" in the `challenges/` directory. The goal of each of these is to get the binary to print out `Congratulations! You win!` by interacting with it throughs standard input. In order to do so, you'll have to reverse engineer each of the binaries and figure out how they work.
 
 # Resources
 
