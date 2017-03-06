@@ -74,7 +74,7 @@ To compile the source code into a binary, run `gcc -o hello hello.c`. You can
 also run the program with `./hello` if desired.
 
 We'll view the binary's machine code with `objdump`. Run `objdump -M intel -d
-hello | less` and your screen will fill with machine code. From here, you can
+hello | less` and your screen will fill with machine code.* From here, you can
 scroll line by line with `j` and `k`, or scroll page by page with the spacebar
 and `b`. You can search for text with `/$text`, jump to the next occurrence
 with `n`, and jump to the previous occurrence with `N`. Search for `<main>` to
@@ -91,6 +91,9 @@ see the machine code for `main()`.  It will look something like this:
   40053a:       c3                      ret
   40053b:       0f 1f 44 00 00          nop    DWORD PTR [rax+rax*1+0x0]
 ```
+
+* If you're using a mac, you'll have to use `-x86-asm-syntax intel` rather than
+`-M intel`
 
 The line at the top is the name of the current symbol (`main`) and it's
 location in memory. A *symbol* is a location in memory that the compiler
