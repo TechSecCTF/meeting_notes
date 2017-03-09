@@ -15,11 +15,6 @@ int guess(int target) {
         tries++;
         scanf("%d", &guess);
 
-        if (guess == 31337) {
-            printf("Well done.\n");
-            return -1;
-        }
-
         if (target < guess)
             printf("Too high.\n");
         else if (target > guess)
