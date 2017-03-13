@@ -1,5 +1,5 @@
 # Binary Workshop (Part 2)
-In this workshop, we're going to explore a number of useful tools for reverse engineering more complex binaries. 
+In this workshop, we're going to explore a number of useful tools for reverse engineering more complex binaries.
 
 ## gdb
 So far, we've only used *static* analysis techniques to reverse engineer
@@ -175,7 +175,7 @@ Stop just before one of the calls to `printf()`, like so:
 ```
 
 ## pwntools
-pwntools is the de-facto library for CTF challenges. It includes a raft of utilities for communicating with processes, writing exploits, and dealing with various encodings. 
+pwntools is the de-facto library for CTF challenges. It includes a raft of utilities for communicating with processes, writing exploits, and dealing with various encodings.
 
 Today we're just going to one part of the pwntools library dealing with interacting with the binary you're reversing. Specifically we're interested in the `pwnlib.tubes` module.
 
@@ -203,11 +203,50 @@ The only 3 functions that are really important to remember are `recvline`, `send
 
 In this directory, we've included a copy of the `challenge3` binary from the last workshop, but modified to make it infeasible to complete manually. (If you haven't yet reverse engineered the binary yet, talk to us and we can explain the solution). Your task is to use pwntools to solve this new challenge. (Again, your goal is to get it to print the congratulatory message). The binary is called `automate_me`.
 
-Finally, frequently CTF challenges (particularly in the pwn category) will ask you to interact with a running process on a remote server. Instead of printing out a congratulatory message, it might read the flag from a file on the server and print it out. 
+Finally, frequently CTF challenges (particularly in the pwn category) will ask you to interact with a running process on a remote server. Instead of printing out a congratulatory message, it might read the flag from a file on the server and print it out.
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
 ## IDA
+For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
+
+Try looking at `automate_me` in IDA. Once you open the binary in IDA, select the default options for now. You can switch between code graph view and assembly view by pressing `Space`.
+
+![load](load.png)
+
+
+You can list entry points to jump to with `Ctrl+e`. Go to the main function and view the code graph.
+
+
+![entry](entry.png)
+
+![main](main.png)
+
+Double-clicking a location or function name will transport you there. To return to a previous view, press `Esc`. Try going to the `generate` and `verify` functions.
+
+As you reverse, you'll want to add comments and rename functions/variables so you can better understand what's going on. Press `n` while highlighting a variable/function, and a dialog will open that will allow you to rename it. Press `:` to enter a comment on the currently highlighted line.
+
+![rename](rename.png)
+
+One of IDA's most powerful tools is its ability to cross-reference functions and data. For example, you can get a view of all the strings in the binary with the shortcut `Shift+F12`, or you can go to `View->Open Subviews->Strings` in the top toolbar. You can then click on a string to take you to the place it's stored in the data section, and type `x` to get a list of cross-references to the string.
+
+![strings](strings.png)
+
+
+![xref](xref.png)
+
+Other useful tips:
+
+* To show opcodes in assembly view, go to `Options->General->Disassembly` and set `Number of opcode bytes` to 8.
+
+* IDA has NO UNDO BUTTON! Make backups so that you can go back if you screw something up.
+
+* You can pack and save an IDA database, and distribute this so that others have access to your defined function names, comments, etc.
+
+* IDA has an interactive Python shell at the bottom of the Output window.
+
+* You can change bytes in the IDA program with `Edit->Patch Program->Change Byte`. Then apply the patches to the input file with `Edit->Patch Program->Apply Patches to Input File`.
+
 
 ## Challenges
 
