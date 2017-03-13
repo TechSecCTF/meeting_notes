@@ -15,7 +15,7 @@ familiar with.
 ## zeller
 Run the zeller program to find what day of the week you were born on (or any
 other significant event occurred). Just from running zeller, you can get an
-idea of what it does, but not the way it does it. ou could easily find the
+idea of what it does, but not the way it does it. You could easily find the
 formula online, but don't do that (yet)! Instead, we'll try to recover the
 formula from the binary.
 
@@ -515,15 +515,11 @@ Other useful tips:
 
 * You can change bytes in the IDA program with `Edit->Patch Program->Change Byte`. Then apply the patches to the input file with `Edit->Patch Program->Apply Patches to Input File`.
 
->>>>>>> d357d5b5fa5f723fa14214b47dc0e5598b791e81
-
-# Challenges
-
 # Resources
 
 This was a lot of information. Feel free to go through this entire guide at your own pace, and email us with any questions. If you want an alternate take or extra information on these topics check out these links:
 
 * [RMS's gdb Tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html) - tutorial on gdb from the creator himself
 * [pwntools documentation](https://docs.pwntools.com/en/stable/) - the "getting started" section is particularly informative
-* [The IDA Pro Book](https://www.nostarch.com/idapro2.htm) - "the unofficial guide to the world's most popular disassembler". You read this as an e-book online if you're an MIT affiliate at this [link](https://search.ebscohost.com/login.aspx?direct=true&db=cat00916a&AN=mit.002013005&site=eds-live&scope=site&custid=s8978330&authtype=sso) (click "Get this @ MIT").
+* [The IDA Pro Book](https://www.nostarch.com/idapro2.htm) - "the unofficial guide to the world's most popular disassembler". You can read this as an e-book online if you're an MIT affiliate at this [link](https://search.ebscohost.com/login.aspx?direct=true&db=cat00916a&AN=mit.002013005&site=eds-live&scope=site&custid=s8978330&authtype=sso) (click "Get this @ MIT").
 * [Unofficial Guide to PEDA](http://security.cs.pub.ro/hexcellents/wiki/kb/toolset/peda) - A good reference for starting with PEDA
