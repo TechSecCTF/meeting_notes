@@ -155,7 +155,10 @@ similarly, but will step into function calls. Run `nexti` a few times and see
 how the output instructions change. You'll also see the `zeller` welcome banner
 being printed.
 
-Stop just before one of the calls to `printf()`, like so:
+# Reading the name and date
+
+Stop just before one of the calls to `printf()`, as seen below. If you already
+passed them, you can start the program over with `run`.
 
 ```
 (gdb)
@@ -173,6 +176,208 @@ Stop just before one of the calls to `printf()`, like so:
    0x40084f <main+69>:  mov    edi,0x400a96
 (gdb)
 ```
+
+According to the AMD64 calling convention, the first argument to `puts()`
+should be contained in `rdi`. To verify this, run `info register rdi`.
+
+```
+(gdb) info register rdi
+rdi            0x400a60 4196960
+(gdb)
+```
+`rdi` appears to be a pointer, as expected. Let's see what it points at:
+
+```
+(gdb) x/s 0x400a60
+0x400a60:       "==== Zeller's Equation Calculator ===="
+(gdb)
+```
+
+You can also run `x/s $rdi`, or `x/20c 0x400a60`, etc.
+
+Stop just before a call to `scanf()`, either by setting a breakpoint or
+stepping through. You can run `man scanf` from the bash shell to see how
+`scanf()` is used. It takes a format string, then a number of addresses to
+write data. Let's examine this on our own:
+
+```
+Breakpoint 2, 0x0000000000400859 in main ()
+3: x/10i $rip
+=> 0x400859 <main+79>:  call   0x4005f0 <__isoc99_scanf@plt>
+   0x40085e <main+84>:  mov    esi,0x601160
+   0x400863 <main+89>:  mov    edi,0x400aa0
+   0x400868 <main+94>:  mov    eax,0x0
+   0x40086d <main+99>:  call   0x4005b0 <printf@plt>
+   0x400872 <main+104>: mov    esi,0x6011a0
+   0x400877 <main+109>: mov    edi,0x400a96
+   0x40087c <main+114>: mov    eax,0x0
+   0x400881 <main+119>: call   0x4005f0 <__isoc99_scanf@plt>
+   0x400886 <main+124>: mov    edx,0x601120
+(gdb) i r rdi
+rdi            0x400a96 4197014
+(gdb) i r rsi
+rsi            0x601160 6295904
+(gdb) x/s 0x400a96
+0x400a96:       "%49s"
+(gdb) x/s 0x601160
+0x601160 <name>:        ""
+(gdb) ni
+Enter a name: Devin
+0x000000000040085e in main ()
+3: x/10i $rip
+=> 0x40085e <main+84>:  mov    esi,0x601160
+   0x400863 <main+89>:  mov    edi,0x400aa0
+   0x400868 <main+94>:  mov    eax,0x0
+   0x40086d <main+99>:  call   0x4005b0 <printf@plt>
+   0x400872 <main+104>: mov    esi,0x6011a0
+   0x400877 <main+109>: mov    edi,0x400a96
+   0x40087c <main+114>: mov    eax,0x0
+   0x400881 <main+119>: call   0x4005f0 <__isoc99_scanf@plt>
+   0x400886 <main+124>: mov    edx,0x601120
+   0x40088b <main+129>: mov    esi,0x400ac3
+(gdb) x/s 0x601160
+0x601160 <name>:        "Devin"
+(gdb)
+```
+
+Before the call to `scanf()`, `esi` is pointing at an empty string. After the
+call, my input was written to `0x601160`. This address holds the name I just
+entered.
+
+Now, let's take a look at the next few instructions:
+
+```
+=> 0x40085e <main+84>:  mov    esi,0x601160
+   0x400863 <main+89>:  mov    edi,0x400aa0
+   0x400868 <main+94>:  mov    eax,0x0
+   0x40086d <main+99>:  call   0x4005b0 <printf@plt>
+```
+
+We can actually analyze this statically and verify it dynamically. The address
+containing the string I entered is being moved into `esi`, so it must be the
+second argument to `printf()`. That means the following call to `printf()`
+contains a format string which will print my name. Verify this by reading the
+string at `0x400aa0`, then continue until the next call to `scanf()`. You can
+run the same commands as above to see that it's writing to `0x6011a0`, a
+different location than the name. This means that the two strings are stored as
+different variables.
+
+# Parsing the date
+Next we see a call to `sscanf()`:
+
+```
+0x0000000000400885 in main ()
+1: x/10i $rip
+=> 0x400885 <main+123>: mov    edx,0x601120
+   0x40088a <main+128>: mov    esi,0x400ac3
+   0x40088f <main+133>: mov    edi,0x6011a0
+   0x400894 <main+138>: mov    eax,0x0
+   0x400899 <main+143>: call   0x4005d0 <__isoc99_sscanf@plt>
+   0x40089e <main+148>: mov    edi,0x601120
+   0x4008a3 <main+153>: call   0x4005a0 <strlen@plt>
+   0x4008a8 <main+158>: mov    DWORD PTR [rbp-0x14],eax
+   0x4008ab <main+161>: mov    eax,DWORD PTR [rbp-0x14]
+   0x4008ae <main+164>: cdqe
+(gdb) x/s 0x6011a0
+0x6011a0 <date_str>:    "05/06/1995"
+(gdb) x/s 0x400ac3
+0x400ac3:       "%[^/]s"
+(gdb)
+```
+
+Nothing too fancy. It's simply scanning the string I gave it ("05/06/1995") up
+to the first occurrence of the "/" character. This means that `0x601120`
+contains the string "05". It then stores the length of the string in `DWORD PTR
+[rbp-0x14]`. Let's see what's next:
+
+```
+0x00000000004008ab in main ()
+1: x/10i $rip
+=> 0x4008ab <main+161>: mov    eax,DWORD PTR [rbp-0x14]
+   0x4008ae <main+164>: cdqe
+   0x4008b0 <main+166>: add    rax,0x1
+   0x4008b4 <main+170>: add    rax,0x6011a0
+   0x4008ba <main+176>: mov    edx,0x6010e0
+   0x4008bf <main+181>: mov    esi,0x400ac3
+   0x4008c4 <main+186>: mov    rdi,rax
+   0x4008c7 <main+189>: mov    eax,0x0
+   0x4008cc <main+194>: call   0x4005d0 <__isoc99_sscanf@plt>
+   0x4008d1 <main+199>: mov    edi,0x6010e0
+(gdb)
+```
+
+`cdqe`? A strange-looking instruction for sure, but it turns out not to be so
+bad. A quick google search will tell exactly what it does. From there we add `1
++ 0x6011a0` to `rax`. So the first argument to the next `sscanf()` is
+`strlen(month_str) + 1 + date_str`. The second must be "%[^/]" since it is the
+same string from the last call, and the last is a memory address. If we view
+the fist argument, the logic becomes clear:
+
+```
+0x00000000004008cc in main ()
+1: x/10i $rip
+=> 0x4008cc <main+194>: call   0x4005d0 <__isoc99_sscanf@plt>
+   0x4008d1 <main+199>: mov    edi,0x6010e0
+   0x4008d6 <main+204>: call   0x4005a0 <strlen@plt>
+   0x4008db <main+209>: mov    DWORD PTR [rbp-0x10],eax
+   0x4008de <main+212>: mov    eax,DWORD PTR [rbp-0x14]
+   0x4008e1 <main+215>: movsxd rdx,eax
+   0x4008e4 <main+218>: mov    eax,DWORD PTR [rbp-0x10]
+   0x4008e7 <main+221>: cdqe
+   0x4008e9 <main+223>: add    rax,rdx
+   0x4008ec <main+226>: add    rax,0x2
+(gdb) x/s $rdi
+0x6011a3 <date_str+3>:  "06/1995"
+(gdb)
+```
+
+By adding the length of the first string read ("05") plus one to the original
+date string, the program has moved the pointer up to the next number to be
+read. From here, the program will again read until encountering a "/"
+character. Step through and try to understand the third call to `sscanf()` on
+your own.
+
+After the third call to `sscanf()`, there are a number of calls to `atoi()`.
+It's pretty easy to determine their purpose just by reading their inputs (and
+possibly checking `man atoi`).
+
+```
+Breakpoint 2, 0x0000000000400911 in main ()
+1: x/10i $rip
+=> 0x400911 <main+259>: mov    edi,0x601120
+   0x400916 <main+264>: call   0x4005e0 <atoi@plt>
+   0x40091b <main+269>: mov    DWORD PTR [rbp-0xc],eax
+   0x40091e <main+272>: mov    edi,0x6010e0
+   0x400923 <main+277>: call   0x4005e0 <atoi@plt>
+   0x400928 <main+282>: mov    DWORD PTR [rbp-0x8],eax
+   0x40092b <main+285>: mov    edi,0x6011e0
+   0x400930 <main+290>: call   0x4005e0 <atoi@plt>
+   0x400935 <main+295>: mov    DWORD PTR [rbp-0x4],eax
+   0x400938 <main+298>: mov    edx,DWORD PTR [rbp-0x4]
+(gdb) x/s 0x601120
+0x601120 <month_str>:   "05"
+(gdb) x/s 0x6010e0
+0x6010e0 <day_str>:     "06"
+(gdb) x/s 0x6011e0
+0x6011e0 <year_str>:    "1995"
+(gdb)
+```
+The numerical values of the dates are being calculated and stored in `DWORD PTR
+[rbp-0xc]`, `DWORD PTR [rbp-0x8]`, and `DWORD PTR [rbp-0x4]`. The plot thickens!
+
+# `zeller()`
+Finally, the arguments are passed to a function called `zeller()`. Whatever
+`zeller()` does, the program then uses its return value as an argument to
+`printf()`, so it's probably a `char*`. A little more analysis (stepping a bit
+more and viewing the inputs to `printf()`) reveals that it returns a `char*`
+corresponding to the day of the week on which the date occurred. All that
+remains is to find what `zeller()` actually does.
+
+There are two ways you can continue from here. You *could* do this on your own,
+by setting a breakpoint at `zeller()`, stepping through, and taking notes. Or
+you could view the formula
+[here](https://en.wikipedia.org/wiki/Zeller%27s_congruence) and walk through
+the code and see how it translates to assembly. It's up to you.
 
 ## pwntools
 pwntools is the de-facto library for CTF challenges. It includes a raft of utilities for communicating with processes, writing exploits, and dealing with various encodings.
