@@ -1,5 +1,5 @@
 # Binary Workshop (Part 2)
-In this workshop, we're going to explore a number of useful tools for reverse engineering more complex binaries. 
+In this workshop, we're going to explore a number of useful tools for reverse engineering more complex binaries.
 
 # GDB
 So far, we've only used *static* analysis techniques to reverse engineer
@@ -380,6 +380,7 @@ you could view the formula
 the code and see how it translates to assembly. Or a combination of both, if
 that's what you prefer.
 
+<<<<<<< HEAD
 # `PEDA`
 `peda` is an extension to `GDB` that makes it a bit nicer to use. You can
 download it with `git clone https://github.com/longld/peda`. You can then start
@@ -468,11 +469,53 @@ The only 3 functions that are really important to remember are `recvline`, `send
 
 In this directory, we've included a copy of the `challenge3` binary from the last workshop, but modified to make it infeasible to complete manually. (If you haven't yet reverse engineered the binary yet, talk to us and we can explain the solution). Your task is to use pwntools to solve this new challenge. (Again, your goal is to get it to print the congratulatory message). The binary is called `automate_me`.
 
-Finally, frequently CTF challenges (particularly in the pwn category) will ask you to interact with a running process on a remote server. Instead of printing out a congratulatory message, it might read the flag from a file on the server and print it out. 
+Finally, frequently CTF challenges (particularly in the pwn category) will ask you to interact with a running process on a remote server. Instead of printing out a congratulatory message, it might read the flag from a file on the server and print it out.
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
+<<<<<<< HEAD
 # IDA
+=======
+## IDA
+For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
+
+Try looking at `automate_me` in IDA. At the load dialog select the default options for now.
+
+![load](load.png)
+
+
+You can list entry points to jump to with `Ctrl+e`. Go to the main function and view the code graph. vYou can switch between code graph view and assembly view by pressing `Space`.
+
+![entry](entry.png)
+
+![main](main.png)
+
+Double-clicking a location or function name will transport you there. To return to a previous view, press `Esc`. Try going to the `generate` and `verify` functions and returning to `main`.
+
+As you reverse, you'll want to add comments and rename functions/variables so you can better understand what's going on. Press `n` while highlighting a variable/function, and a dialog will open that will allow you to rename it. Press `:` to enter a comment on the currently highlighted line.
+
+![rename](rename.png)
+
+One of IDA's most powerful tools is its ability to cross-reference functions and data. For example, you can get a view of all the strings in the binary with the shortcut `Shift+F12`, or you can go to `View->Open Subviews->Strings` in the top toolbar. You can then click on a string to take you to the place it's stored in the data section, and type `x` to get a list of cross-references to the string. Find out where the `Congratulations` string is printed. 
+
+![strings](strings.png)
+
+
+![xref](xref.png)
+
+Other useful tips:
+
+* To show opcodes in assembly view, go to `Options->General->Disassembly` and set `Number of opcode bytes` to 8.
+
+* IDA has NO UNDO BUTTON! Make backups so that you can go back if you screw something up.
+
+* You can pack and save an IDA database, and distribute this so that others have access to your defined function names, comments, etc.
+
+* IDA has an interactive Python shell at the bottom of the Output window.
+
+* You can change bytes in the IDA program with `Edit->Patch Program->Change Byte`. Then apply the patches to the input file with `Edit->Patch Program->Apply Patches to Input File`.
+
+>>>>>>> d357d5b5fa5f723fa14214b47dc0e5598b791e81
 
 # Challenges
 
