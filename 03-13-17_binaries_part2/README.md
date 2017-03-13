@@ -380,7 +380,6 @@ you could view the formula
 the code and see how it translates to assembly. Or a combination of both, if
 that's what you prefer.
 
-<<<<<<< HEAD
 # `PEDA`
 `peda` is an extension to `GDB` that makes it a bit nicer to use. You can
 download it with `git clone https://github.com/longld/peda`. You can then start
@@ -473,9 +472,6 @@ Finally, frequently CTF challenges (particularly in the pwn category) will ask y
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
-<<<<<<< HEAD
-# IDA
-=======
 ## IDA
 For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
 
