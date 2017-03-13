@@ -415,25 +415,24 @@ In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.
 ## IDA
 For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
 
-Try looking at `automate_me` in IDA. Once you open the binary in IDA, select the default options for now. You can switch between code graph view and assembly view by pressing `Space`.
+Try looking at `automate_me` in IDA. At the load dialog select the default options for now.
 
 ![load](load.png)
 
 
-You can list entry points to jump to with `Ctrl+e`. Go to the main function and view the code graph.
-
+You can list entry points to jump to with `Ctrl+e`. Go to the main function and view the code graph. vYou can switch between code graph view and assembly view by pressing `Space`.
 
 ![entry](entry.png)
 
 ![main](main.png)
 
-Double-clicking a location or function name will transport you there. To return to a previous view, press `Esc`. Try going to the `generate` and `verify` functions.
+Double-clicking a location or function name will transport you there. To return to a previous view, press `Esc`. Try going to the `generate` and `verify` functions and returning to `main`.
 
 As you reverse, you'll want to add comments and rename functions/variables so you can better understand what's going on. Press `n` while highlighting a variable/function, and a dialog will open that will allow you to rename it. Press `:` to enter a comment on the currently highlighted line.
 
 ![rename](rename.png)
 
-One of IDA's most powerful tools is its ability to cross-reference functions and data. For example, you can get a view of all the strings in the binary with the shortcut `Shift+F12`, or you can go to `View->Open Subviews->Strings` in the top toolbar. You can then click on a string to take you to the place it's stored in the data section, and type `x` to get a list of cross-references to the string.
+One of IDA's most powerful tools is its ability to cross-reference functions and data. For example, you can get a view of all the strings in the binary with the shortcut `Shift+F12`, or you can go to `View->Open Subviews->Strings` in the top toolbar. You can then click on a string to take you to the place it's stored in the data section, and type `x` to get a list of cross-references to the string. Find out where the `Congratulations` string is printed. 
 
 ![strings](strings.png)
 
