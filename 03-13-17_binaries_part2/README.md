@@ -1,7 +1,7 @@
 # Binary Workshop (Part 2)
 In this workshop, we're going to explore a number of useful tools for reverse engineering more complex binaries. 
 
-## gdb
+# GDB
 So far, we've only used *static* analysis techniques to reverse engineer
 binaries. These techniques allow us to learn about the binary without having to
 run it. To perform *dynamic* analysis, we will need to use a debugger, which
@@ -12,14 +12,14 @@ For this guide we'll use GDB, the Gnu Debugger. This basic yet powerful
 debugger can be found on virtually any system, which makes it a good tool to be
 familiar with.
 
-# zeller
+## zeller
 Run the zeller program to find what day of the week you were born on (or any
 other significant event occurred). Just from running zeller, you can get an
 idea of what it does, but not the way it does it. ou could easily find the
 formula online, but don't do that (yet)! Instead, we'll try to recover the
 formula from the binary.
 
-# `disassemble`
+## `disassemble`
 Run `gdb zeller` to open zeller from within GDB. You'll get a rather long
 welcome message (which can be suppressed with the `-q` flag) and a `(gdb)`
 prompt. At this point the `zeller` program has been loaded into memory, but no
@@ -51,7 +51,7 @@ From the disassembly above, we can tell that there are several calls to
 `puts()` before any input is even read. We can infer that this is the welcome
 banner at the beginning of the program.
 
-# `break`
+## `break`
 To actually run the program we first have to set a breakpoint. The syntax is
 either `break <function>` or `break *<address>`. Since we want to analyze the
 execution of the `main()` function, run `break main`. You can view information
@@ -71,7 +71,7 @@ Starting program: /home/devneal/techsec/meeting_notes/03-13-17_binaries_part2/ze
 Breakpoint 1, 0x000000000040080e in main ()
 (gdb)
 ```
-# `x` and `display`
+## `x` and `display`
 The program has just stopped at the start of the `main()` function in `zeller`.
 However, there isn't much to indicate it. You can view the contents of the
 registers by running `info registers`.
@@ -147,7 +147,7 @@ to display the next few instructions as we step through the program. This can
 be achieved with `display/10i $rip`. In fact, we can continually view any
 location in memory with the syntax `display/<number><format> <address>`.
 
-# `nexti` and `stepi`
+## `nexti` and `stepi`
 Now we're ready to begin stepping through the program. The `nexti` instruction
 will execute a single assembly instruction, unless that instruction is a
 function call, in which case it will step over the call. `stepi` works
@@ -155,7 +155,7 @@ similarly, but will step into function calls. Run `nexti` a few times and see
 how the output instructions change. You'll also see the `zeller` welcome banner
 being printed.
 
-# Reading the name and date
+## Reading the name and date
 
 Stop just before one of the calls to `printf()`, as seen below. If you already
 passed them, you can start the program over with `run`.
@@ -262,7 +262,7 @@ run the same commands as above to see that it's writing to `0x6011a0`, a
 different location than the name. This means that the two strings are stored as
 different variables.
 
-# Parsing the date
+## Parsing the date
 Next we see a call to `sscanf()`:
 
 ```
@@ -365,7 +365,7 @@ Breakpoint 2, 0x0000000000400911 in main ()
 The numerical values of the dates are being calculated and stored in `DWORD PTR
 [rbp-0xc]`, `DWORD PTR [rbp-0x8]`, and `DWORD PTR [rbp-0x4]`. The plot thickens!
 
-# `zeller()`
+## `zeller()`
 Finally, the arguments are passed to a function called `zeller()`. Whatever
 `zeller()` does, the program then uses its return value as an argument to
 `printf()`, so it's probably a `char*`. A little more analysis (stepping a bit
@@ -377,9 +377,69 @@ There are two ways you can continue from here. You *could* do this on your own,
 by setting a breakpoint at `zeller()`, stepping through, and taking notes. Or
 you could view the formula
 [here](https://en.wikipedia.org/wiki/Zeller%27s_congruence) and walk through
-the code and see how it translates to assembly. It's up to you.
+the code and see how it translates to assembly. Or a combination of both, if
+that's what you prefer.
 
-## pwntools
+# `PEDA`
+`peda` is an extension to `GDB` that makes it a bit nicer to use. You can
+download it with `git clone https://github.com/longld/peda`. You can then start
+`peda` by running `gdb`, then running `source ~/peda/peda.py` from the `gdb`
+prompt.
+
+```
+[----------------------------------registers-----------------------------------]
+RAX: 0x40080e (<main>:  push   rbp)
+RBX: 0x0
+RCX: 0x0
+RDX: 0x7fffffffde88 --> 0x7fffffffe227 ("XDG_VTNR=7")
+RSI: 0x7fffffffde78 --> 0x7fffffffe1e4 ("/home/devneal/techsec/meeting_notes/03-13-17_binaries_part2/zeller")
+RDI: 0x1
+RBP: 0x7fffffffdd90 --> 0x400970 (<__libc_csu_init>:    push   r15)
+RSP: 0x7fffffffdd90 --> 0x400970 (<__libc_csu_init>:    push   r15)
+RIP: 0x400812 (<main+4>:        sub    rsp,0x20)
+R8 : 0x4009e0 (<__libc_csu_fini>:       repz ret)
+R9 : 0x7ffff7de78e0 (<_dl_fini>:        push   rbp)
+R10: 0x846
+R11: 0x7ffff7a2e740 (<__libc_start_main>:       push   r14)
+R12: 0x400610 (<_start>:        xor    ebp,ebp)
+R13: 0x7fffffffde70 --> 0x1
+R14: 0x0
+R15: 0x0
+EFLAGS: 0x246 (carry PARITY adjust ZERO sign trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x40080d <zeller+204>:       ret
+   0x40080e <main>:     push   rbp
+   0x40080f <main+1>:   mov    rbp,rsp
+=> 0x400812 <main+4>:   sub    rsp,0x20
+   0x400816 <main+8>:   mov    edi,0x400a38
+   0x40081b <main+13>:  call   0x400590 <puts@plt>
+   0x400820 <main+18>:  mov    edi,0x400a60
+   0x400825 <main+23>:  call   0x400590 <puts@plt>
+[------------------------------------stack-------------------------------------]
+0000| 0x7fffffffdd90 --> 0x400970 (<__libc_csu_init>:   push   r15)
+0008| 0x7fffffffdd98 --> 0x7ffff7a2e830 (<__libc_start_main+240>:       mov    edi,eax)
+0016| 0x7fffffffdda0 --> 0x0
+0024| 0x7fffffffdda8 --> 0x7fffffffde78 --> 0x7fffffffe1e4 ("/home/devneal/techsec/meeting_notes/03-13-17_binaries_part2/zeller")
+0032| 0x7fffffffddb0 --> 0x100000000
+0040| 0x7fffffffddb8 --> 0x40080e (<main>:      push   rbp)
+0048| 0x7fffffffddc0 --> 0x0
+0056| 0x7fffffffddc8 --> 0xc45de35a33218fe0
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+
+Breakpoint 1, 0x0000000000400812 in main ()
+gdb-peda$
+```
+
+You'll notice that when you hit a breakpoint in `peda`, your given a breakdown
+of the stack, registers, and next few instructions to be executed. This
+alleviates some of the burden of constantly running `disp/10i $rip` or
+`disp/12xg $rsp`. You can view these "contexts" at any time by running `context
+reg`, `context code`, and `context stack`. You also have a shiny new way to
+disassemble functions: `pdisas <function>` will give you an annotated view of
+`<function>`'s assembly code
+
+# pwntools
 pwntools is the de-facto library for CTF challenges. It includes a raft of utilities for communicating with processes, writing exploits, and dealing with various encodings. 
 
 Today we're just going to one part of the pwntools library dealing with interacting with the binary you're reversing. Specifically we're interested in the `pwnlib.tubes` module.
@@ -412,9 +472,9 @@ Finally, frequently CTF challenges (particularly in the pwn category) will ask y
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
-## IDA
+# IDA
 
-## Challenges
+# Challenges
 
 # Resources
 
@@ -422,4 +482,5 @@ This was a lot of information. Feel free to go through this entire guide at your
 
 * [RMS's gdb Tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html) - tutorial on gdb from the creator himself
 * [pwntools documentation](https://docs.pwntools.com/en/stable/) - the "getting started" section is particularly informative
-* [ ] [The IDA Pro Book](https://www.nostarch.com/idapro2.htm) - "the unofficial guide to the world's most popular disassembler". You read this as an e-book online if you're an MIT affiliate at this [link](https://search.ebscohost.com/login.aspx?direct=true&db=cat00916a&AN=mit.002013005&site=eds-live&scope=site&custid=s8978330&authtype=sso) (click "Get this @ MIT").
+* [The IDA Pro Book](https://www.nostarch.com/idapro2.htm) - "the unofficial guide to the world's most popular disassembler". You read this as an e-book online if you're an MIT affiliate at this [link](https://search.ebscohost.com/login.aspx?direct=true&db=cat00916a&AN=mit.002013005&site=eds-live&scope=site&custid=s8978330&authtype=sso) (click "Get this @ MIT").
+* [Unofficial Guide to PEDA](http://security.cs.pub.ro/hexcellents/wiki/kb/toolset/peda) - A good reference for starting with PEDA
