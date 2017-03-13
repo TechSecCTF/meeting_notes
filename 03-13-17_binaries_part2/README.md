@@ -472,7 +472,7 @@ Finally, frequently CTF challenges (particularly in the pwn category) will ask y
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
-## IDA
+# IDA
 For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
 
 Try looking at `automate_me` in IDA. At the load dialog select the default options for now.
