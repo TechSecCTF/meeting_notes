@@ -472,7 +472,7 @@ Finally, frequently CTF challenges (particularly in the pwn category) will ask y
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
-## IDA
+# IDA
 For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
 
 Try looking at `automate_me` in IDA. At the load dialog select the default options for now.
@@ -511,13 +511,10 @@ Other useful tips:
 
 * You can change bytes in the IDA program with `Edit->Patch Program->Change Byte`. Then apply the patches to the input file with `Edit->Patch Program->Apply Patches to Input File`.
 
-# Challenges
-
-# Resources
 
 This was a lot of information. Feel free to go through this entire guide at your own pace, and email us with any questions. If you want an alternate take or extra information on these topics check out these links:
 
 * [RMS's gdb Tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html) - tutorial on gdb from the creator himself
 * [pwntools documentation](https://docs.pwntools.com/en/stable/) - the "getting started" section is particularly informative
-* [The IDA Pro Book](https://www.nostarch.com/idapro2.htm) - "the unofficial guide to the world's most popular disassembler". You read this as an e-book online if you're an MIT affiliate at this [link](https://search.ebscohost.com/login.aspx?direct=true&db=cat00916a&AN=mit.002013005&site=eds-live&scope=site&custid=s8978330&authtype=sso) (click "Get this @ MIT").
+* [The IDA Pro Book](https://www.nostarch.com/idapro2.htm) - "the unofficial guide to the world's most popular disassembler". You can read this as an e-book online if you're an MIT affiliate at this [link](https://search.ebscohost.com/login.aspx?direct=true&db=cat00916a&AN=mit.002013005&site=eds-live&scope=site&custid=s8978330&authtype=sso) (click "Get this @ MIT").
 * [Unofficial Guide to PEDA](http://security.cs.pub.ro/hexcellents/wiki/kb/toolset/peda) - A good reference for starting with PEDA
