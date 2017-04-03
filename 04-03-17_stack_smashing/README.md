@@ -195,3 +195,5 @@ python script, you may find the following useful:
 directly
 * `shellcode = asm(shellcraft.i386.linux.sh())` - save 32-bit shellcode to
 `shellcode`
+
+If you try to run the binaries locally, remember to first create a `flag.txt` file with a dummy flag inside.
