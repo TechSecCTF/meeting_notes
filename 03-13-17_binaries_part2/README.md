@@ -1,30 +1,30 @@
 # Binary Workshop (Part 2)
 In this workshop, we're going to explore a number of useful tools for reverse engineering more complex binaries.
 
-# GDB
+# `GDB`
 So far, we've only used *static* analysis techniques to reverse engineer
 binaries. These techniques allow us to learn about the binary without having to
 run it. To perform *dynamic* analysis, we will need to use a debugger, which
 will allow us to step through individual instructions, examine memory, and
 alter program execution while the program runs.
 
-For this guide we'll use GDB, the Gnu Debugger. This basic yet powerful
+For this guide we'll use `GDB`, the Gnu Debugger. This basic yet powerful
 debugger can be found on virtually any system, which makes it a good tool to be
 familiar with.
 
-## zeller
-Run the zeller program to find what day of the week you were born on (or any
-other significant event occurred). Just from running zeller, you can get an
-idea of what it does, but not the way it does it. ou could easily find the
-formula online, but don't do that (yet)! Instead, we'll try to recover the
-formula from the binary.
+## `zeller`
+Run the `zeller` program to find what day of the week you were born on (or any
+other significant event occurred). Just from running `zeller`, you can get an
+idea of what it does, but not the way it does it. You could easily find the
+formula online or read the source code, but don't do that (yet)! Instead, we'll
+try to recover the formula from the binary.
 
 ## `disassemble`
-Run `gdb zeller` to open zeller from within GDB. You'll get a rather long
+Run `gdb zeller` to open `zeller` from within `GDB`. You'll get a rather long
 welcome message (which can be suppressed with the `-q` flag) and a `(gdb)`
 prompt. At this point the `zeller` program has been loaded into memory, but no
-commands have been run. You can view the disassembly of zeller's `main()`
-function by running `disassemble main` at the gdb prompt. To view it in Intel
+commands have been run. You can view the disassembly of `zeller`'s `main()`
+function by running `disassemble main` at the `gdb` prompt. To view it in Intel
 syntax rather than AT&T syntax, you must first run `set disassembly-flavor
 intel`. Your output will look something like this:
 
@@ -309,7 +309,7 @@ contains the string "05". It then stores the length of the string in `DWORD PTR
 `cdqe`? A strange-looking instruction for sure, but it turns out not to be so
 bad. A quick google search will tell exactly what it does. From there we add `1
 + 0x6011a0` to `rax`. So the first argument to the next `sscanf()` is
-`strlen(month_str) + 1 + date_str`. The second must be "%[^/]" since it is the
+`strlen(month_str) + 1 + date_str`. The second must be `"%[^/]"` since it is the
 same string from the last call, and the last is a memory address. If we view
 the fist argument, the logic becomes clear:
 
@@ -375,12 +375,11 @@ remains is to find what `zeller()` actually does.
 
 There are two ways you can continue from here. You *could* do this on your own,
 by setting a breakpoint at `zeller()`, stepping through, and taking notes. Or
-you could view the formula
+you could read the code, or view the formula
 [here](https://en.wikipedia.org/wiki/Zeller%27s_congruence) and walk through
 the code and see how it translates to assembly. Or a combination of both, if
 that's what you prefer.
 
-<<<<<<< HEAD
 # `PEDA`
 `peda` is an extension to `GDB` that makes it a bit nicer to use. You can
 download it with `git clone https://github.com/longld/peda`. You can then start
@@ -473,9 +472,6 @@ Finally, frequently CTF challenges (particularly in the pwn category) will ask y
 
 In pwntools, this is as simple as changing `process('foo.bin')` to `remote('foo.challenge.ctf', 1337)`; all the `recvline`'s and `sendline`s should continue to function.
 
-<<<<<<< HEAD
-# IDA
-=======
 ## IDA
 For both of the two challenges in this workshop, you can also use IDA to statically analyze the binaries. IDA also has a powerful debugging interface, but unfortunately, IDA does not have a 64-bit Linux debugger.
 
@@ -514,8 +510,6 @@ Other useful tips:
 * IDA has an interactive Python shell at the bottom of the Output window.
 
 * You can change bytes in the IDA program with `Edit->Patch Program->Change Byte`. Then apply the patches to the input file with `Edit->Patch Program->Apply Patches to Input File`.
-
->>>>>>> d357d5b5fa5f723fa14214b47dc0e5598b791e81
 
 # Challenges
 
