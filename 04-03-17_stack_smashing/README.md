@@ -155,3 +155,43 @@ with the address of `buf`, then when the program will begin executing the
 shellcode when the function returns. And since the purpose of shellcode is to
 spawn a shell, we can then run arbitrary commands on the machine that was
 exploited, a disastrous result for a bug as innocent as an incorrect write.
+
+# Mitigation Techniques
+Since buffer overflows are so common and so dangerous, many mitigation
+techniques have been invented to make them more difficult to exploit. The most
+common ones are stack canaries, non-executable stacks, and ASLR.
+
+## Stack Canaries
+These are random word-sized values written to the stack between local variables
+and the saved frame pointer. Before the function returns, the stack canary is
+checked to ensure it still has the same value that it did originally. If not,
+an error is thrown.
+
+## Non-Executable Stack
+An error is thrown whenever the program attempts to execute instructions from
+the stack.
+
+## Address Space Layout Randomization (ASLR)
+The segments composing the program's memory are randomized before each run,
+making it much more difficult to find the address of functions.
+
+These techniques make stack smashing much more difficult in practice, but they
+do not make it impossible. At its core, exploitation requires an attention to
+detail greater than even the original authors, not rote memorization of
+techniques.
+
+# Challenges
+There are 4 challenges, each running at `lox.xvm.mit.edu:800X`, where `X` is
+the number of the challenge (starting from 1). You can interact with the
+programs from the command line with `netcat` (`echo "input" | nc
+lox.xvm.mit.edu 8001`) or `telnet` (`telnet lox.xvm.mit.edu 8001`). From a
+python script, you may find the following useful:
+
+* `from pwn import *` - import all the `pwn` modules
+* `s = remote('lox.xvm.mit.edu', 8001)` - create a `remote` object
+* `remote.sendline()` - send a line of input to the port specified by `remote`
+* `remote.readline()` - read a line of input from the port specified by `remote`
+* `remote.interactive()` - interact with the port specified by `remote`
+directly
+* `shellcode = asm(shellcraft.i386.linux.sh())` - save 32-bit shellcode to
+`shellcode`
