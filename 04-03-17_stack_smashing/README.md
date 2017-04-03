@@ -137,7 +137,7 @@ named (unless you tell the compiler not to do this). These names are called
 72: 0000000000400400     0 FUNC    GLOBAL DEFAULT   11 _init
 ```
 From this output, we can see that `main()` is located at `0x400566`. If there
-were other functions in the program (line in challenge 3), they would be
+were other functions in the program (like in challenge 3), they would be
 included here too, and you could read off their memory locations.
 
 # Shellcode
