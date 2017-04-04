@@ -195,5 +195,20 @@ python script, you may find the following useful:
 directly
 * `shellcode = asm(shellcraft.i386.linux.sh())` - save 32-bit shellcode to
 `shellcode`
+* `addr = p32(0xffaaddee)` - pack a 32-bit address into a python string
 
-If you try to run the binaries locally, remember to first create a `flag.txt` file with a dummy flag inside.
+Finally here are some notes / tips for the challenges:
+
+* We've provided the binaries (and in some cases the source code) for the four challenges in `./challenges/`.
+* For an extra challenge, try to solve them without looking at the source code.
+* For each one you're looking for a `flag{}`.
+* If you try to run the binaries locally, remember to first create a `flag.txt` file with a dummy flag inside.
+* The first two binaries are 64-bit, and the last two are 32-bit.
+* The last two binaries are compiled with `-fno-stack-protector -m32 -z execstack`
+* ASLR has been turned off on the server.
+
+# Further Reading / Exercises
+
+* [Smashing The Stack For Fun And Profit](http://insecure.org/stf/smashstack.html) - The article that brought buffer overflows to the masses
+* [narnia@overthewire](http://overthewire.org/wargames/narnia/) - A war game that teaches the basics of binary exploitation
+* [microcorruption](https://microcorruption.com/) - An "embedded security CTF"
