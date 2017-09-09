@@ -47,11 +47,11 @@ Categories include:
 
 Here's an example of what a Jeopardy style CTF might look like:
 
-![alt-text](https://www.dropbox.com/s/3wnt96wyf5utma7/jeopardy.png?dl=1)
+![alt-text](jeopardy.png)
 
 In Attack / Defense, each team is given a a set of identical services that they are required to maintain. Each of these services contains one or more vulnerabilities that teams will need to patch (defense). Teams can also exploit each others services to steal flags and gain points (attack). Teams are allowed to monitor the network traffic to their services, so if a team gets exploited, they are often able to figure out what the specific exploit was, and then apply it to all the other teams. This technique is known as *reflection*.
 
-![alt-text](https://www.dropbox.com/s/jfje2ztja708djs/IMG_20160312_175714728.jpg?dl=1)
+![alt-text](attack_defense.jpg)
 
 ### ctftime.org
 
@@ -78,11 +78,7 @@ Teams have to qualify for the event in order to participate. There are number of
 
 We frequently collaborate with two other CTF teams, Lab RATs, which consists of employees at MIT Lincoln Labs (a great place for security UROPs!) and students at [RPISEC](https://rpis.ec/), RPI's CTF team.
 
-<<<<<<< HEAD
 On September 23rd, RPI has invited us to attend a workshop they're giving on binary exploitation. Let us know if you're interested on the form.
-=======
-On Setempber 23rd, RPI has invited us to attend a workshop they're giving on binary exploitation. Let us know if you're interested on the form.
->>>>>>> 223280ec8af51100b85bd3d33c3abf3212e5a324
 
 ### Resources
 
