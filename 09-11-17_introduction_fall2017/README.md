@@ -4,19 +4,19 @@
 
 Action items (in decreasing order of importance):
 
-* Fill out our [interest survey](https://goo.gl/forms/Z996dPHf5jNzRyLx2). This is how you will get on our mailing list, techsec@mit.edu.
+* Fill out our [interest survey](https://goo.gl/forms/nPMJaSGRof6emGAf2). This is how you will get on our mailing list, techsec@mit.edu.
 * Join [our slack](https://techsec-mit.slack.com/signup). We mainly use this for coordination during CTFs.
 * Make an account and join our team on [ctftime](https://ctftime.org/team/24526). More about this website below.
 * At some point, join our [team GitHub organization](https://github.com/TechSecCTF) (after giving us your username through the survey). We'll be using this to take meeting notes, share resources, and post writeups.
 
 ## MiniCTF
 
-If you've done all that, have a go at [a MiniCTF](https://techsec.scripts.mit.edu/midway.pdf) that we prepared for the Activities Midway. For each challenge, you're looking for a "flag"—a specific string that signals that you've solved the challenge. All eight flags are of the form `TechSec{.*}` where any series of ASCII characters can appear in between the braces.
+If you've done all that, have a go at [a MiniCTF](https://techsec.scripts.mit.edu/midway.pdf) that we prepared for the Activities Midway. For each challenge, you're looking for a "flag"—a specific string that signals that you've solved the challenge. All eight flags are of the form `TechSec{.*}` where any series of ASCII characters can appear in between the braces. If you solve a challenge, show us the flag at the end of today's meeting and we'll give you a lockpicking set.
 
 ## Introductions
 
-* Ray Wang, Junior - raywang@mit.edu
-* Rahul Sridhar, Junior - rsridhar@mit.edu
+* Ray Wang, Senior - raywang@mit.edu
+* Rahul Sridhar, Senior - rsridhar@mit.edu
 * Devin Neal, Senior - devneal@mit.edu
 
 ## Goals
@@ -72,31 +72,21 @@ We also have a [Google Calendar](https://calendar.google.com/calendar/embed?src=
 
 DEF CON is possibly the most well-known security convention; it takes place every year in Las Vegas, Nevada during the summer. There are a number of events and competitions that happen during the convention, but by far the most notable is the [DEF CON CTF](https://legitbs.net/), an Attack / Defense style competition that pits the most skilled CTF teams against each other.
 
-Teams have to qualify for the event in order to participate. There are number of (mostly) Jeopardy style CTFs that DEF CON has designated as "qualifiers". (A number of them are on the list above!) TechSec, in collaboration with RPISEC and MIT Lincoln Labs (Lab RATs) qualified to DEF CON last year! We hope to do so again.
+Teams have to qualify for the event in order to participate. There are number of (mostly) Jeopardy style CTFs that DEF CON has designated as "qualifiers". TechSec, in collaboration with RPISEC and MIT Lincoln Labs (Lab RATs) qualified to DEF CON last year! We hope to do so again.
 
 ### Collaborations
 
-We frequently collaborate with two other CTF teams, Lab RATs, which consists of employees at MIT Lincoln Labs (a great place for security UROPs!) and students at RPISEC, RPI's CTF team.
+We frequently collaborate with two other CTF teams, Lab RATs, which consists of employees at MIT Lincoln Labs (a great place for security UROPs!) and students at [RPISEC](https://rpis.ec/), RPI's CTF team.
 
-[comment]: # (Talk about trip to RPI Workshop here)
+On September 23rd, RPI has invited us to attend a workshop they're giving on binary exploitation. Let us know if you're interested on the form.
 
 ### Resources
 
 CTFs can be pretty intimidating for beginners, and many people have asked us what resources exist that they can use to practice and improve. We've compiled a list [here](https://github.com/TechSecCTF/resources/blob/master/Resources%20for%20CTFs.md). Feel free to add to it!
 
-### Boston Key Party
-
-The first event we plan to compete in is the [Boston Key Party](https://bostonkey.party/) which will run from February 24th to February 26th (Friday to Sunday). We plan to meet right at the start, and will probably hold a couple more "official" meetings later in the weekend. We'll all be active on the Slack approximately 24/7 so feel free to contribute wherever you are that weekend.
-
-This is a DEF CON qualifier, and is also one of the better-run annual CTFs, so we'd like to put up a strong showing.
-
-If you are new to CTFs and want to learn how get better, we strongly recommend that you show up right at the start of the event rather than later. All the easy challenges will get solved first, and you'll get a chance to actually watch how people approach these problems.
-
-*One final note: while anyone is free to attend our weekly meetings, we are restricting the CTF teams for each event to MIT undergrads and graduate students.*
-
 ## Future Meetings
 
-We plan to meet once a week at a time and place to be determined (although probably 7:00 on some weekday). Here's some ideas we have for various meetings:
+We plan to meet once a week on Mondays at 6:30pm in 32-124. Here's some ideas we have for various meetings:
 
 * CTF Challenge Practice
 * Workshops (How to use pwntools, How to use IDA, How to solve any RSA challenge)
