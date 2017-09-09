@@ -78,7 +78,11 @@ Teams have to qualify for the event in order to participate. There are number of
 
 We frequently collaborate with two other CTF teams, Lab RATs, which consists of employees at MIT Lincoln Labs (a great place for security UROPs!) and students at [RPISEC](https://rpis.ec/), RPI's CTF team.
 
+<<<<<<< HEAD
 On September 23rd, RPI has invited us to attend a workshop they're giving on binary exploitation. Let us know if you're interested on the form.
+=======
+On Setempber 23rd, RPI has invited us to attend a workshop they're giving on binary exploitation. Let us know if you're interested on the form.
+>>>>>>> 223280ec8af51100b85bd3d33c3abf3212e5a324
 
 ### Resources
 
