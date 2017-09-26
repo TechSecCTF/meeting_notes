@@ -118,4 +118,4 @@ Enter the password: flag{pyth0n+rev3rsing+1s+eaZy}
 Nice work!
 ```
 
-Over the next few workshops, we'll be covering the basics of x86 assembly. Reverse engineering challenges written in assembly will be similar in spirit to this one, but with the added challenge of needing to read assembly instead of python.
+Over the next few workshops, we'll be covering the basics of x86 assembly. Reverse engineering challenges written in assembly will be similar in spirit to this one, but with the added difficulty of needing to read assembly instead of python.
