@@ -95,7 +95,7 @@ To understand the function and reverse it, you need to have a good understanding
 * `ord` and `chr`
 * `^` (xor)
 
-Read the documentation of these functions to find out what they all do. Once you understand them, finding a password that meets the requirements is as simple as undoing each of the functions. You can read a succint solution script in [solution.py](solution.py).
+[Read](https://docs.python.org/2/library/struct.html) [the](https://docs.python.org/2/library/base64.html) [documentation](https://docs.python.org/2/library/binascii.html) [of](https://docs.python.org/2/library/functions.html#ord) [these](https://docs.python.org/2/library/functions.html#chr) [functions](https://stackoverflow.com/questions/14526584/what-does-the-xor-operator-do) to find out what they all do. Once you understand them, finding a password that meets the requirements is as simple as undoing each of the functions. You can read a succinct solution script in [solution.py](solution.py).
 
 Some things to keep in mind:
 * When we seed `random` with `1234`, we're ensuring that it always produces the same set of numbers regardless of where or when the program is run. All versions of python2 should produce the same set of numbers with that seed.
