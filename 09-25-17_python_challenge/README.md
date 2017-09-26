@@ -1,6 +1,6 @@
 # Christopher Orsini Talk
 
-Contact christopher.orsini@navy.mil if you are interested in learning more about NCWDG.
+Contact christopher.orsini@navy.mil if you are interested in learning more about NCWDG!
 
 # Introduction to Reverse Engineering
 
