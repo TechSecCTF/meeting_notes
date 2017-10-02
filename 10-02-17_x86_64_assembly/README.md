@@ -151,6 +151,7 @@ arguments are loaded into `xmm0` through `xmm7` in order. If there are more
 than six arguments, the rest are pushed onto the stack in reverse order. The
 caller then executes the call instruction, which pushes the location of the
 next instruction onto the stack. This location is called the *return address*.
+(TODO: swap `rcx` and `rdx` on the diagram below)
 
 ![Initial Function Stack](images/initial_function_stack.png)
 
