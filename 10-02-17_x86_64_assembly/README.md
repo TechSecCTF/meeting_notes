@@ -1,4 +1,4 @@
-# Introduction to x86-64 assembly
+# Binary Workshop
 The first step in learning to exploit programs is understanding how they work.
 This guide is going to cover ELF executables specifically, but the knowledge is
 generally applicable to other types of executables. We colloquially refer to
@@ -390,7 +390,8 @@ To further practice your newfound assembly skills, we've provided 3 binary "game
 
 This was a lot of information. Feel free to go through this entire guide at your own pace, and email us with any questions. If you want an alternate take or extra information on these topics check out these links:
 
-* [x86 Assembly Guide](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html) - a beautiful and fairly comprehensive guide to x86 (the 32-bit equivalent to x86-64).
+* [x86 Assembly Guide](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html) - a beautiful and fairly comprehensive guide to x86.
 * [RE Cheat Sheet](http://r00ted.com/cheat%20sheet%20reverse%20v6.png) - a sometimes-useful cheatsheet for reverse engineering
 * [6.004 OCW](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-004-computation-structures-spring-2009/) - Lecture Videos for MIT's 6.004 class
 * [x86 Assembly Wikibook](https://en.wikibooks.org/wiki/X86_Assembly) - crowd-written book on x86 assembly
+* [godbolt.org](https://godbolt.org/) - explore different compilers for various languages
