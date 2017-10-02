@@ -37,3 +37,19 @@ int main()
     c = foo(a, b);
 }
 ```
+
+
+## conditionals, branching
+```C
+#include <stdio.h>
+
+int main()
+{
+    int a = 3;
+    if (a < 10) {
+        printf("%d is small", a);
+    } else {
+        printf("%d is big", a);
+    }
+}
+```
