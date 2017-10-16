@@ -9,3 +9,10 @@ Here are some tips:
  * start with `main`
  * [x86 instruction set reference](http://www.felixcloutier.com/x86/)
  * [reverse engineering cheatsheet](http://r00ted.com/cheat%20sheet%20reverse%20v6.png)
+ * To run the binaries, you can SSH into Athena and clone this git repo, then `cd` into the correct folder. 
+ 
+ ```
+ ssh kerberos@athena.dialup.mit.edu
+ git clone https://github.com/TechSecCTF/meeting_notes
+ ```
+ 
