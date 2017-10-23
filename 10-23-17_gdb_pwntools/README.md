@@ -307,8 +307,8 @@ contains the string "05". It then stores the length of the string in `DWORD PTR
 ```
 
 `cdqe`? A strange-looking instruction for sure, but it turns out not to be so
-bad. A quick google search will tell exactly what it does. From there we add `1
-+ 0x6011a0` to `rax`. So the first argument to the next `sscanf()` is
+bad. A quick google search will tell exactly what it does. From there we add 
+`1 + 0x6011a0` to `rax`. So the first argument to the next `sscanf()` is
 `strlen(month_str) + 1 + date_str`. The second must be `"%[^/]"` since it is the
 same string from the last call, and the last is a memory address. If we view
 the fist argument, the logic becomes clear:
