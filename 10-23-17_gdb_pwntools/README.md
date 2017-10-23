@@ -155,6 +155,18 @@ similarly, but will step into function calls. Run `nexti` a few times and see
 how the output instructions change. You'll also see the `zeller` welcome banner
 being printed.
 
+
+## Aside: GDB configuration
+Add commands that you want to run at each gdb invocation to the `~/.gdbinit` file.
+This is what mine looks like:
+
+```
+set disassembly-flavor intel                                                                                                                                                                                 
+set history save on  # To save gdb history for subsequent runs
+source /root/pwndbg/gdbinit.py
+```
+
+
 ## Reading the name and date
 
 Stop just before one of the calls to `printf()`, as seen below. If you already
@@ -307,7 +319,7 @@ contains the string "05". It then stores the length of the string in `DWORD PTR
 ```
 
 `cdqe`? A strange-looking instruction for sure, but it turns out not to be so
-bad. A quick google search will tell exactly what it does. From there we add 
+bad. A quick google search will tell exactly what it does. From there we add
 `1 + 0x6011a0` to `rax`. So the first argument to the next `sscanf()` is
 `strlen(month_str) + 1 + date_str`. The second must be `"%[^/]"` since it is the
 same string from the last call, and the last is a memory address. If we view
