@@ -155,6 +155,18 @@ similarly, but will step into function calls. Run `nexti` a few times and see
 how the output instructions change. You'll also see the `zeller` welcome banner
 being printed.
 
+
+## Aside: GDB configuration
+Add commands that you want to run at each gdb invocation to the `~/.gdbinit` file.
+This is what mine looks like:
+
+```
+set disassembly-flavor intel                                                                                                                                                                                 
+set history save on  # To save gdb history for subsequent runs
+source /root/pwndbg/gdbinit.py
+```
+
+
 ## Reading the name and date
 
 Stop just before one of the calls to `printf()`, as seen below. If you already
@@ -307,7 +319,7 @@ contains the string "05". It then stores the length of the string in `DWORD PTR
 ```
 
 `cdqe`? A strange-looking instruction for sure, but it turns out not to be so
-bad. A quick google search will tell exactly what it does. From there we add 
+bad. A quick google search will tell exactly what it does. From there we add
 `1 + 0x6011a0` to `rax`. So the first argument to the next `sscanf()` is
 `strlen(month_str) + 1 + date_str`. The second must be `"%[^/]"` since it is the
 same string from the last call, and the last is a memory address. If we view
@@ -380,64 +392,65 @@ you could read the code, or view the formula
 the code and see how it translates to assembly. Or a combination of both, if
 that's what you prefer.
 
-# `PEDA`
-`peda` is an extension to `GDB` that makes it a bit nicer to use. You can
-download it with `git clone https://github.com/longld/peda`. You can then start
-`peda` by running `gdb`, then running `source ~/peda/peda.py` from the `gdb`
-prompt.
+# `pwndbg`
 
+A nice extension to `gdb` is [`pwndbg`](https://github.com/pwndbg/pwndbg), which adds useful commands for reversing/exploitation.
+
+This is what a breakpoint looks like in `pwndbg`:
 ```
-[----------------------------------registers-----------------------------------]
-RAX: 0x40080e (<main>:  push   rbp)
-RBX: 0x0
-RCX: 0x0
-RDX: 0x7fffffffde88 --> 0x7fffffffe227 ("XDG_VTNR=7")
-RSI: 0x7fffffffde78 --> 0x7fffffffe1e4 ("/home/devneal/techsec/meeting_notes/03-13-17_binaries_part2/zeller")
-RDI: 0x1
-RBP: 0x7fffffffdd90 --> 0x400970 (<__libc_csu_init>:    push   r15)
-RSP: 0x7fffffffdd90 --> 0x400970 (<__libc_csu_init>:    push   r15)
-RIP: 0x400812 (<main+4>:        sub    rsp,0x20)
-R8 : 0x4009e0 (<__libc_csu_fini>:       repz ret)
-R9 : 0x7ffff7de78e0 (<_dl_fini>:        push   rbp)
-R10: 0x846
-R11: 0x7ffff7a2e740 (<__libc_start_main>:       push   r14)
-R12: 0x400610 (<_start>:        xor    ebp,ebp)
-R13: 0x7fffffffde70 --> 0x1
-R14: 0x0
-R15: 0x0
-EFLAGS: 0x246 (carry PARITY adjust ZERO sign trap INTERRUPT direction overflow)
-[-------------------------------------code-------------------------------------]
-   0x40080d <zeller+204>:       ret
-   0x40080e <main>:     push   rbp
-   0x40080f <main+1>:   mov    rbp,rsp
-=> 0x400812 <main+4>:   sub    rsp,0x20
-   0x400816 <main+8>:   mov    edi,0x400a38
-   0x40081b <main+13>:  call   0x400590 <puts@plt>
-   0x400820 <main+18>:  mov    edi,0x400a60
-   0x400825 <main+23>:  call   0x400590 <puts@plt>
-[------------------------------------stack-------------------------------------]
-0000| 0x7fffffffdd90 --> 0x400970 (<__libc_csu_init>:   push   r15)
-0008| 0x7fffffffdd98 --> 0x7ffff7a2e830 (<__libc_start_main+240>:       mov    edi,eax)
-0016| 0x7fffffffdda0 --> 0x0
-0024| 0x7fffffffdda8 --> 0x7fffffffde78 --> 0x7fffffffe1e4 ("/home/devneal/techsec/meeting_notes/03-13-17_binaries_part2/zeller")
-0032| 0x7fffffffddb0 --> 0x100000000
-0040| 0x7fffffffddb8 --> 0x40080e (<main>:      push   rbp)
-0048| 0x7fffffffddc0 --> 0x0
-0056| 0x7fffffffddc8 --> 0xc45de35a33218fe0
-[------------------------------------------------------------------------------]
-Legend: code, data, rodata, value
-
-Breakpoint 1, 0x0000000000400812 in main ()
-gdb-peda$
+Breakpoint 1, 0x0000000000400812 in main ()                                                                                                                                                                  
+LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA                                                                                                                                                            
+[───────────────────────────────────────────────REGISTERS────────────────────────────────────────────────]                                                                                                   
+*RAX  0x40080e (main) ◂— push   rbp                                                                                                                                                                          
+ RBX  0x0                                                                                                                                                                                                    
+ RCX  0x0                                                                                                                                                                                                    
+*RDX  0x7fffffffdf78 —▸ 0x7fffffffe2ed ◂— 0x524554524f4c4f43 ('COLORTER')                                                                                                                                    
+*RDI  0x1                                                                                                                                                                                                    
+*RSI  0x7fffffffdf68 —▸ 0x7fffffffe29a ◂— 0x6667682f746e6d2f ('/mnt/hgf')                                                                                                                                    
+*R8   0x4009e0 (__libc_csu_fini) ◂— ret                                                                                                                                                                      
+*R9   0x7ffff7de8ca0 (_dl_fini) ◂— push   rbp                                                                                                                                                                
+*R10  0x848                                                                                                                                                                                                  
+*R11  0x7ffff7a5c1f0 (__libc_start_main) ◂— push   r14                                                                                                                                                       
+*R12  0x400610 (_start) ◂— xor    ebp, ebp                                                                                                                                                                   
+*R13  0x7fffffffdf60 ◂— 0x1                                                                                                                                                                                  
+ R14  0x0                                                                                                                                                                                                    
+ R15  0x0                                                                                                                                                                                                    
+*RBP  0x7fffffffde80 —▸ 0x400970 (__libc_csu_init) ◂— push   r15                                                                                                                                             
+*RSP  0x7fffffffde80 —▸ 0x400970 (__libc_csu_init) ◂— push   r15                                                                                                                                             
+*RIP  0x400812 (main+4) ◂— sub    rsp, 0x20                                                                                                                                                                  
+[─────────────────────────────────────────────────DISASM─────────────────────────────────────────────────]                                                                                                   
+ ► 0x400812 <main+4>     sub    rsp, 0x20                                                                                                                                                                    
+   0x400816 <main+8>     mov    edi, 0x400a38                                                                                                                                                                
+   0x40081b <main+13>    call   puts@plt                      <0x400590>                                                                                                                                     
+                                                                                                                                                                                                             
+   0x400820 <main+18>    mov    edi, 0x400a60                                                                                                                                                                
+   0x400825 <main+23>    call   puts@plt                      <0x400590>                                                                                                                                     
+                                                                                                                                                                                                             
+   0x40082a <main+28>    mov    edi, 0x400a38                                                                                                                                                                
+   0x40082f <main+33>    call   puts@plt                      <0x400590>                                                                                                                                     
+                                                                                                                                                                                                             
+   0x400834 <main+38>    mov    edi, 0xa                                                                                                                                                                     
+   0x400839 <main+43>    call   putchar@plt                   <0x400580>                                                                                                                                     
+                                                                                                                                                                                                             
+   0x40083e <main+48>    mov    edi, 0x400a87                                                                                                                                                                
+   0x400843 <main+53>    mov    eax, 0                                                                                                                                                                       
+[─────────────────────────────────────────────────STACK──────────────────────────────────────────────────]                                                                                                   
+00:0000│ rbp rsp  0x7fffffffde80 —▸ 0x400970 (__libc_csu_init) ◂— push   r15                                                                                                                                 
+01:0008│          0x7fffffffde88 —▸ 0x7ffff7a5c2e1 (__libc_start_main+241) ◂— mov    edi, eax                                                                                                                
+02:0010│          0x7fffffffde90 ◂— 0x0                                                                                                                                                                      
+03:0018│          0x7fffffffde98 —▸ 0x7fffffffdf68 —▸ 0x7fffffffe29a ◂— 0x6667682f746e6d2f ('/mnt/hgf')                                                                                                      
+04:0020│          0x7fffffffdea0 ◂— 0x100000000                                                                                                                                                              
+05:0028│          0x7fffffffdea8 —▸ 0x40080e (main) ◂— push   rbp                                                                                                                                            
+06:0030│          0x7fffffffdeb0 ◂— 0x0                                                                                                                                                                      
+07:0038│          0x7fffffffdeb8 ◂— 0xeb558733efd41076                                                                                                                                                       
+[───────────────────────────────────────────────BACKTRACE────────────────────────────────────────────────]                                                                                                   
+ ► f 0           400812 main+4                                                                                                                                                                               
+   f 1     7ffff7a5c2e1 __libc_start_main+241                                                                                                                                                                
+Breakpoint main
 ```
 
-You'll notice that when you hit a breakpoint in `peda`, your given a breakdown
-of the stack, registers, and next few instructions to be executed. This
-alleviates some of the burden of constantly running `disp/10i $rip` or
-`disp/12xg $rsp`. You can view these "contexts" at any time by running `context
-reg`, `context code`, and `context stack`. You also have a shiny new way to
-disassemble functions: `pdisas <function>` will give you an annotated view of
-`<function>`'s assembly code
+You'll notice that when you hit a breakpoint in pwndbg, you're given a breakdown of the stack, registers, and next few instructions to be executed. This alleviates some of the burden of constantly running disp/10i $rip or disp/12xg $rsp. You can view these "contexts" at any time by running `context reg`, `context code`, and `context stack`. You also have a shiny new way to disassemble functions: `u <function>` will give you an annotated view of <function>'s assembly code
+
 
 # pwntools
 pwntools is the de-facto library for CTF challenges. It includes a raft of utilities for communicating with processes, writing exploits, and dealing with various encodings.
