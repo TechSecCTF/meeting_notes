@@ -144,6 +144,14 @@ Non-academic
 * Do a UROP in security (Lincoln Labs or PDOS or TCS (if crypto))
 * Get an internship in security
 
+## Media
+
+* [Mr. Robot](http://www.imdb.com/title/tt4158110/)
+* [Sneakers](http://www.imdb.com/title/tt0105435/)
+* [Countdown to Zero Day](https://www.amazon.com/Countdown-Zero-Day-Stuxnet-Digital/dp/0770436196)
+* [The Code Book](https://www.amazon.com/Code-Book-Science-Secrecy-Cryptography/dp/0385495323)
+* [/r/itsaunixsystem](https://www.reddit.com/r/itsaunixsystem/)
+
 ## Misc
 
 * [Risky Business](https://risky.biz/netcasts/risky-business/) - podcast
