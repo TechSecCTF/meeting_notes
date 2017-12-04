@@ -2,46 +2,46 @@
 
 ## Blogs
 
-* https://krebsonsecurity.com/
-* https://www.troyhunt.com/
-* https://blog.cryptographyengineering.com/
-* https://security.googleblog.com/
-* https://www.malwaretech.com/
+* [Krebs on Security](https://krebsonsecurity.com/_)
+* [Troy Hunt](https://www.troyhunt.com/_)
+* [Cryptography Engineering](https://blog.cryptographyengineering.com/_)
+* [Google Security Blog](https://security.googleblog.com/_)
+* [MalwareTech](https://www.malwaretech.com/_)
 
 ## Twitter
 
-* @bcrypt
-* @matthew_d_green
-* @taviso
-* @alexstamos
-* @pwnallthethings
-* @SwiftOnSecurity
-* @thegrugq
-* @MalwareUnicorn
-* @mattblaze
-* @qwertyoruiopz
-* @natashenka
-* @riskybusiness ‏
-* @halvarflake
-* @binitamshah
-* @REpupper
+* [@bcrypt](https://twitter.com/bcrypt)
+* [@matthew_d_green](https://twitter.com/matthew_d_green)
+* [@taviso](https://twitter.com/taviso)
+* [@alexstamos](https://twitter.com/alexstamos)
+* [@pwnallthethings](https://twitter.com/pwnallthethings)
+* [@SwiftOnSecurity](https://twitter.com/SwiftOnSecurity)
+* [@thegrugq](https://twitter.com/thegrugq)
+* [@MalwareUnicorn](https://twitter.com/MalwareUnicorn)
+* [@mattblaze](https://twitter.com/mattblaze)
+* [@qwertyoruiopz](https://twitter.com/qwertyoruiopz)
+* [@natashenka](https://twitter.com/natashenka)
+* [@riskybusiness](https://twitter.com/riskybusiness)
+* [@halvarflake](https://twitter.com/halvarflake)
+* [@binitamshah](https://twitter.com/binitamshah)
+* [@REpupper](https://twitter.com/REpupper)
 
 
 ## Subreddits
 
-* /r/netsec
-* /r/crypto
-* /r/ReverseEngineering/
-* /r/securityengineering
+* [/r/netsec](https://reddit.com/r/netsec)
+* [/r/crypto](https://reddit.com/r/crypto)
+* [/r/ReverseEngineering](https://reddit.com/r/ReverseEngineering)
+* [/r/securityengineering](https://reddit.com/r/securityengineering)
 
 ## Classes
 
 MIT
 
-* 6.857
-* 6.875
-* 6.876
-* 6.858
+* 6.857 (Network Security & Cryptography)
+* 6.875 (Cryptography & Cryptanalysis)
+* 6.876 (Lattice-based Cryptography)
+* 6.858 (Systems Security)
 
 MOOCs / other
 
@@ -71,11 +71,12 @@ MOOCs / other
 * Ransomware
   - WannaCry
   - Petya
-* HeartBleed
-* Shellshock
-* "I am root"
-* Dirty COW
-* CloudBleed
+* Hall of fame
+  * HeartBleed
+  * Shellshock
+  * "I am root"
+  * Dirty COW
+  * CloudBleed
 * Crypto
   - POODLE
   - CRIME
@@ -83,6 +84,7 @@ MOOCs / other
   - Lucky13
 * Botnets
   - Mirai
+  - Torpig
 
 ## Best Papers
 
@@ -129,7 +131,18 @@ Non-academic
 
 ## Skills (and how to achieve them)
 
-* Learn python (take)
+* Learn Python (take 6.01 / 6.S080)
+* Learn how a computer works (take 6.004)
+* Learn C (take 6.172 / 6.828)
+* Smash some stacks (take 6.858 / do pwnable.kr)
+* Break some crypto (take 6.857 / do cryptopals)
+* Learn x86 assembly (read through earlier TechSec meeting notes)
+* Learn basic web security (take 6.858 / do natas)
+* Learn how to use gdb (take 6.858 / just play with it)
+* Acquire IDA Pro and play with it
+* Play in CTFs
+* Do a UROP in security (Lincoln Labs or PDOS or TCS (if crypto))
+* Get an internship in security
 
 ## Misc
 
@@ -138,3 +151,13 @@ Non-academic
 * [Anything by James Mickens](https://mickens.seas.harvard.edu/wisdom-james-mickens) - humor
 * [Phrack](http://www.phrack.org/) - security magazine
 * [POC||GTFO](https://www.alchemistowl.org/pocorgtfo/)
+
+## Best-Of list
+
+At most one thing from each section worth checking out now
+
+* [This World of Ours](https://www.usenix.org/system/files/1401_08-12_mickens.pdf)
+* [/r/netsec](https://reddit.com/r/netsec)
+* [Zero Knowledge Proofs, an Illustrated Primer](https://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/)
+* [natas](http://overthewire.org/wargames/natas/natas0.html)
+* [Your Botnet is My Botnet](https://seclab.cs.ucsb.edu/media/uploads/papers/torpig.pdf)
