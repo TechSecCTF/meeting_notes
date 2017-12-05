@@ -2,11 +2,11 @@
 
 ## Blogs
 
-* [Krebs on Security](https://krebsonsecurity.com/_)
-* [Troy Hunt](https://www.troyhunt.com/_)
-* [Cryptography Engineering](https://blog.cryptographyengineering.com/_)
-* [Google Security Blog](https://security.googleblog.com/_)
-* [MalwareTech](https://www.malwaretech.com/_)
+* [Krebs on Security](https://krebsonsecurity.com/)
+* [Troy Hunt](https://www.troyhunt.com/)
+* [Cryptography Engineering](https://blog.cryptographyengineering.com/)
+* [Google Security Blog](https://security.googleblog.com/)
+* [MalwareTech](https://www.malwaretech.com/)
 
 ## Twitter
 
