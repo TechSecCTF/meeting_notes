@@ -17,7 +17,7 @@ Logic gates are the building blocks of the processor. (They're made of other, sm
 
      True AND True is True <-> 1 AND 1 is 1
 
-     True OR  True is True <-> 1 OR  0 is 1
+     True OR  False is True <-> 1 OR  0 is 1
 
      NOT True is False <-> NOT 1 is 0
      
