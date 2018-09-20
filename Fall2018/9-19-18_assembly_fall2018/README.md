@@ -15,9 +15,9 @@ In processor-land, all data is expressed as 1s and 0s, which in turn directly co
 ## Logic Gates
 Logic gates are the building blocks of the processor. (They're made of other, smaller building blocks called MOSFETs, which aren't important right now and are Yet Another 6.004 Thing.) They're a physical implementation of basic logical operations: AND, NOT, NAND, XOR, and so on. Two wires with voltages go in (except NOT, which only has one), and something sensible comes out the one wire on the other end.
 
-True AND True is True <-> 1 AND 1 is 1
+     True AND True is True <-> 1 AND 1 is 1
 
-True OR  True is True <-> 1 OR  0 is 1
+     True OR  True is True <-> 1 OR  0 is 1
 
      NOT True is False <-> NOT 1 is 0
      
