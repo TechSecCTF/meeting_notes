@@ -20,14 +20,16 @@ _Challenge 3_
 There are two 121-character English strings encrypted with the same “one-time pad” in `one-time-pad.py`. Decrypt the ciphertexts.
 
 ## RSA
-_Easy challenge:_ http://techsec.scripts.mit.edu/rsa.txt  
-_Hard challenge:_ http://techsec.scripts.mit.edu/broadcast.txt
+_Challenge 4 (easy)_  
+http://techsec.scripts.mit.edu/rsa.txt  
+_Challenge 5 (hard)_  
+http://techsec.scripts.mit.edu/broadcast.txt
 
 ## Info Session Challenges
-_Challenge 4_  
+_Challenge 6_  
 `AljoZlj{Ulc3y_BzL_Jhlz@y_j1wOLY}`  
   
-_Challenge 5_  
+_Challenge 7_  
 `5d6c6a615a6c6a724740676c56607a564856657c4a427056675c644b6c7b74`
 
 ## Resources
