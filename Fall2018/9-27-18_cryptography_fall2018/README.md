@@ -13,8 +13,8 @@ _Challenge 1_
   
 ## Caesar Cipher
 
-The Caesar Cipher is a rotation of the English alphabet. For example,
-`Plain:    ABCDEFGHIJKLMNOPQRSTUVWXYZ
+The Caesar Cipher is a rotation of the English alphabet. For example,  
+`Plain:    ABCDEFGHIJKLMNOPQRSTUVWXYZ  
 Cipher:   XYZABCDEFGHIJKLMNOPQRSTUVW`
 
 _Challenge 2_  
