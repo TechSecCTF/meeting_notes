@@ -4,11 +4,11 @@ Cryptography is the study of secure communication. But like all areas of securit
 
 ## Base 64
 
+Whenever you see alphanumeric characters, possibly with + and = signs, you are likely looking at a base 64 encoding.  
+  
 _Challenge 1_  
 `aV9saWtlX2NyeXB0bw==`
-
-Whenever you see alphanumeric characters, possibly with + and = signs, you are likely looking at a base 64 encoding!
-
+  
 ## Caesar Cipher
 
 _Challenge 2_  
@@ -22,6 +22,7 @@ There are two 121-character English strings encrypted with the same “one-time 
 ## RSA
 _Challenge 4 (easy)_  
 http://techsec.scripts.mit.edu/rsa.txt  
+  
 _Challenge 5 (hard)_  
 http://techsec.scripts.mit.edu/broadcast.txt
 
