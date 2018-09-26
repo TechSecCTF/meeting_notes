@@ -1,6 +1,8 @@
 # Cryptography
 
-Cryptography is the study of secure communication. But like all areas of security, it is easy for developers to make mistakes implementing cryptography, which is why we try to find these vulnerabilities and exploit them in CTFs.
+Cryptography is the study of secure communication. But like all areas of security, it is easy for developers to make mistakes implementing cryptography, which is why we try to find these vulnerabilities and exploit them in CTFs.  
+  
+For the following challenges, feel free to use whatever language you are most comfortable with.
 
 ## Base 64
 
