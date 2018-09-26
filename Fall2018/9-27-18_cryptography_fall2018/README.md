@@ -36,7 +36,7 @@ _Challenge 5_
 _Challenge 6_  
 `AljoZlj{Ulc3y_BzL_Jhlz@y_j1wOLY}`  
   
-_Challenge 7_  
+_Challenge 7 (single byte XOR cipher)_  
 `5d6c6a615a6c6a724740676c56607a564856657c4a427056675c644b6c7b74`
 
 ## Resources
