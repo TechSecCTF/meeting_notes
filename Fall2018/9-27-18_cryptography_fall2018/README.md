@@ -15,7 +15,7 @@ _Challenge 2_
   
 ## Caesar Cipher
 
-![Caesar Cipher] (https://github.com/TechSecCTF/meeting_notes/blob/master/Fall2018/9-27-18_cryptography_fall2018/caesar-cipher.png)  
+![Caesar Cipher](https://github.com/TechSecCTF/meeting_notes/blob/master/Fall2018/9-27-18_cryptography_fall2018/caesar-cipher.png)  
 
 _Challenge 3_  
 `fqoteqo{kmk_eqogdufk}`
@@ -29,7 +29,7 @@ _Challenge 4_
 There are two 121-character English strings encrypted with the same “one-time pad” in `one-time-pad.py`. Decrypt the ciphertexts.
 
 ## RSA
-![RSA] (https://github.com/TechSecCTF/meeting_notes/blob/master/Fall2018/9-27-18_cryptography_fall2018/rsa.png)  
+![RSA](https://github.com/TechSecCTF/meeting_notes/blob/master/Fall2018/9-27-18_cryptography_fall2018/rsa.png)  
 
 _Challenge 5_  
 http://techsec.scripts.mit.edu/rsa.txt  
