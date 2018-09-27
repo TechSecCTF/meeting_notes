@@ -20,6 +20,9 @@ _Challenge 3_
 
 
 ## One Time Pad
+
+![One Time Pad](meeting_notes/Fall2018/9-27-18_cryptography_fall2018/one-time-pad.png)  
+
 _Challenge 4_  
 There are two 121-character English strings encrypted with the same “one-time pad” in `one-time-pad.py`. Decrypt the ciphertexts.
 
