@@ -51,4 +51,4 @@ _Challenge 8 (single byte XOR cipher)_
 `5d6c6a615a6c6a724740676c56607a564856657c4a427056675c644b6c7b74`
 
 ## More Challenges
-If you solve everything, start working on [Cryptopals](cryptopals.com).
+If you solve everything, start working on [Cryptopals](https://cryptopals.com/).
