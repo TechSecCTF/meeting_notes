@@ -10,7 +10,7 @@ Why do we use base 64? It is easy to represent binary data this way, and it only
 _Challenge 1_  
 `aV9saWtlX2NyeXB0bw==`
 
-_Challenge 2_
+_Challenge 2_  
 `546563685365637B313C336B727970746F7D`
   
 ## Caesar Cipher
